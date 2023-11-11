@@ -23,4 +23,27 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+          tags: ${{ vars.DOCKER_REPO }}:${{ github.sha }}
+
+      - name: Clone Private Repository
+        uses: actions/checkout@v3
+        with:
+          repository: namgaytobden/manifest
+          token: ${{ secrets.TOKEN }}
+          path: manifest/
+          ref: main
+
+      - uses: namgaytobden/k8s-Manifestation-Beta@main
+        with:
+          image: ${{ vars.DOCKER_REPO }}:${{ github.sha }}
+          manifest_path: deployment/manifest/
+
+      - name: kubectl CLI Action
+        uses: teknatha136/actions-kubectl@v1.0.0   
+        with:
+            kubectl-version: v1.27.3
+            kube-config: ${{ secrets.KUBECONFIG }}                                
+            run: | 
+              kubectl --kubeconfig=.kube/config apply -f deployments/manifest/ -n k3d
+
+    
