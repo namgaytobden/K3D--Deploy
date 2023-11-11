@@ -1,4 +1,4 @@
-name: Staging docker
+name: Deploy using k3d
 on:
   workflow_dispatch:
 jobs:
