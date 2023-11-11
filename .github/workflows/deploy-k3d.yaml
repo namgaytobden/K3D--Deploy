@@ -36,7 +36,7 @@ jobs:
       - uses: namgaytobden/k8s-Manifestation-Beta@main
         with:
           image: ${{ vars.DOCKER_REPO }}:${{ github.sha }}
-          manifest_path: deployment/manifest/
+          manifest_path: manifest/deployment/
 
       - name: kubectl CLI Action
         uses: teknatha136/actions-kubectl@v1.0.0   
