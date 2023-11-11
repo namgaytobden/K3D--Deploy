@@ -43,7 +43,7 @@ jobs:
         with:
             kubectl-version: v1.27.3
             kube-config: ${{ secrets.KUBECONFIG }}                                
-            run: | 
-              kubectl --kubeconfig=.kube/config apply -f manifest/deployment/ -n k3d
-
-    
+      
+      - name: Deploy
+        run:
+          kubectl --kubeconfig=.kube/config apply -f manifest/deployment/ -n k3d
